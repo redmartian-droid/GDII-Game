@@ -72,6 +72,8 @@ public class EnemyAI : MonoBehaviour
 
     public void RestartLevel()
     {
+        Debug.Log("Button pressed!");
+
         Time.timeScale = 1f;
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
