@@ -10,6 +10,7 @@ public class Firearm : MonoBehaviour
     private float nextTimeToFire = 0f;  // Controls fire rate
     public float fireRate = 15f;  // Rate of fire
     internal int ammoCache;  // Ammo cache for reloading
+    public ParticleSystem GunFlash;
 
     void Update()
     {
@@ -19,6 +20,7 @@ public class Firearm : MonoBehaviour
             nextTimeToFire = Time.time + 1f / fireRate;
             Shoot();
             Debug.Log("Bullet shot");
+            GunFlash.Play();
         }
     }
 
@@ -38,6 +40,7 @@ public class Firearm : MonoBehaviour
             {
                 // Apply damage to the enemy
                 target.TakeDamage(damage);
+               
             }
         }
     }
