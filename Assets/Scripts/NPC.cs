@@ -13,6 +13,8 @@ public class NPC : MonoBehaviour
     private bool isPlayerInRange; // Checks if player is in range for interaction
     private bool isInteracting; // Checks if interaction is happening
 
+    private IEnumerator currentDialogueCoroutine; // To hold reference to the running coroutine
+
     private void Update()
     {
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
@@ -34,7 +36,15 @@ public class NPC : MonoBehaviour
         dialogueIndex = 0;
         isInteracting = true;
         dialogueUI.SetActive(true);
-        StartCoroutine(TypeDialogue());
+
+        // Stop the previous coroutine if it's still running
+        if (currentDialogueCoroutine != null)
+        {
+            StopCoroutine(currentDialogueCoroutine);
+        }
+
+        currentDialogueCoroutine = TypeDialogue();
+        StartCoroutine(currentDialogueCoroutine);
     }
 
     // Function to display the next line of dialogue
@@ -43,7 +53,14 @@ public class NPC : MonoBehaviour
         dialogueIndex++;
         if (dialogueIndex < dialogue.Length)
         {
-            StartCoroutine(TypeDialogue());
+            // Stop the previous coroutine if it's still running
+            if (currentDialogueCoroutine != null)
+            {
+                StopCoroutine(currentDialogueCoroutine);
+            }
+
+            currentDialogueCoroutine = TypeDialogue();
+            StartCoroutine(currentDialogueCoroutine);
         }
         else
         {
@@ -88,6 +105,13 @@ public class NPC : MonoBehaviour
             if (isInteracting)
             {
                 EndDialogue(); // End dialogue if the player walks away
+
+                // Stop the coroutine if it's still running
+                if (currentDialogueCoroutine != null)
+                {
+                    StopCoroutine(currentDialogueCoroutine);
+                    currentDialogueCoroutine = null;
+                }
             }
         }
     }
