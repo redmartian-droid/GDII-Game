@@ -3,11 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class EnemyAI : MonoBehaviour
 {
-    public float speed = 3.0f; 
+    public float speed = 3.0f;
     public float health = 100f;
-    public GameObject endGameScreen; 
+    public GameObject endGameScreen;
+    public float activationDistance = 10.0f; // Distance within which the enemy activates
 
-    private Transform player; 
+    private Transform player;
 
     void Start()
     {
@@ -16,17 +17,17 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        FollowPlayer();
+        if (player != null && Vector3.Distance(transform.position, player.position) <= activationDistance)
+        {
+            FollowPlayer();
+        }
     }
 
     void FollowPlayer()
     {
-        if (player != null)
-        {
-            Vector3 direction = player.position - transform.position;
-            direction.Normalize(); // normalise the direction to prevent faster movement when further away
-            transform.position += direction * speed * Time.deltaTime; // move enemy towards player
-        }
+        Vector3 direction = new Vector3(player.position.x, transform.position.y, player.position.z) - transform.position;
+        direction.Normalize(); // Normalise the direction to prevent faster movement when further away
+        transform.position += direction * speed * Time.deltaTime; // Move enemy towards player
     }
 
     public void TakeDamage(float damage)
@@ -42,7 +43,7 @@ public class EnemyAI : MonoBehaviour
 
     void Die()
     {
-        Destroy(gameObject); 
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
