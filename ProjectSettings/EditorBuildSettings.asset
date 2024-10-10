@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/StartMenu.unity
+    guid: d945c423da2bf5c47b212a12882445d1
+  - enabled: 1
+    path: Assets/Scenes/Tyrese.unity
+    guid: 154aea9397c9ed94cb73969dae5859cd
   m_configObjects: {}

@@ -44,4 +44,8 @@ public class Chest : MonoBehaviour
         // Reload the current scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
