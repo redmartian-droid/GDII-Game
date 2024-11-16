@@ -4,6 +4,8 @@ using TMPro;
 public class PickUpCoin : MonoBehaviour
 {
     public TextMeshProUGUI coinCountText;
+    public AudioClip coinPickupSound; // Reference to the coin pickup sound
+    private static AudioSource audioSource; // Shared audio source for playing sounds
 
     private static int coinCount = 0;
     private static TextMeshProUGUI staticCoinCountText;
@@ -12,6 +14,14 @@ public class PickUpCoin : MonoBehaviour
     {
         // Assign the static reference to the instance reference
         staticCoinCountText = coinCountText;
+
+        // Ensure there is a single AudioSource for playing sound effects
+        if (audioSource == null)
+        {
+            GameObject audioObject = new GameObject("CoinPickupAudioSource");
+            audioSource = audioObject.AddComponent<AudioSource>();
+        }
+
         UpdateCoinCountText();
     }
 
@@ -28,6 +38,7 @@ public class PickUpCoin : MonoBehaviour
     {
         coinCount++;
         UpdateCoinCountText();
+        PlayCoinPickupSound(); // Play the sound when a coin is picked up
         Destroy(gameObject);
     }
 
@@ -35,7 +46,15 @@ public class PickUpCoin : MonoBehaviour
     {
         if (staticCoinCountText != null)
         {
-            staticCoinCountText.text = "Coins: " + coinCount;
+            staticCoinCountText.text = "-  " + coinCount;
+        }
+    }
+
+    void PlayCoinPickupSound()
+    {
+        if (coinPickupSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(coinPickupSound); // Play the sound effect
         }
     }
 
