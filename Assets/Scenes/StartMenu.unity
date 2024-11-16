@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1807,7 +1807,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2, y: 97}
+  m_AnchoredPosition: {x: -2, y: 128}
   m_SizeDelta: {x: 764.6761, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1147857549
@@ -3606,7 +3606,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -10.5, y: -7}
+  m_AnchoredPosition: {x: -10.5, y: 38}
   m_SizeDelta: {x: 764.6761, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2063757584
@@ -3629,7 +3629,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "E = Interact with NPC\nSpace Bar = Shoot \nEsc = Pause Menu\n"
+  m_text: "E = Interact with NPC\nSpace Bar = Shoot \nEsc = Pause Menu\nLeft Shift
+    = Sprint \nLeft Control = Crouch \n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 73dd65ea4e4f3f0488ff135cd794263b, type: 2}
   m_sharedMaterial: {fileID: -5348889690437809283, guid: 73dd65ea4e4f3f0488ff135cd794263b, type: 2}
@@ -3656,8 +3657,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18.54
-  m_fontSizeBase: 18.54
+  m_fontSize: 16
+  m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

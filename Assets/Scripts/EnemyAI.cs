@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI; // For UI Text
+using TMPro; // Optional, if using TextMeshPro
 using UnityEngine.SceneManagement;
 using System.Collections;
 
@@ -13,8 +15,11 @@ public class EnemyAI : MonoBehaviour
     public GotHitEffect gotHitEffect;
     public float knockbackForce = 5.0f;
     public float knockbackDuration = 0.5f;
+    public TMP_Text livesText; // Reference to the UI Text
+    public int maxLives = 5; // Maximum number of lives
 
     private Transform player;
+    private int lives; // Current number of lives
     private int contactCount = 0;
     private bool canIncrement = true;
     private float lastContactTime;
@@ -23,6 +28,8 @@ public class EnemyAI : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         lastContactTime = -contactInterval;
+        lives = maxLives; // Initialize lives
+        UpdateLivesText(); // Initialize UI text
 
         foreach (GameObject obj in incrementObjects)
         {
@@ -84,10 +91,7 @@ public class EnemyAI : MonoBehaviour
                 UpdateIncrementObjects();
                 StartCoroutine(KnockbackPlayer());
 
-                if (contactCount >= 4)
-                {
-                    EndGame();
-                }
+                LoseLife(); // Deduct a life when the player is hit
             }
         }
     }
@@ -116,6 +120,23 @@ public class EnemyAI : MonoBehaviour
         {
             incrementObjects[i].SetActive(i < contactCount);
         }
+    }
+
+    private void LoseLife()
+    {
+        lives--; // Decrement lives
+        UpdateLivesText(); // Update the UI text
+
+        if (lives <= 0)
+        {
+            EndGame();
+        }
+    }
+
+    private void UpdateLivesText()
+    {
+        // Update the text to reflect the current number of lives
+        livesText.text = "Lives: " + lives;
     }
 
     private void EndGame()
