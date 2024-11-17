@@ -43,12 +43,23 @@ public class PlayerMovement : MonoBehaviour
         crouching
     }
 
+    [Header("Audio")]
+    public AudioClip walkingSound; // Walking sound effect
+    private AudioSource audioSource;
+    private bool isPlayingWalkingSound = false;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
         startYScale = transform.localScale.y;
+
+        // Initialize audio source
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.clip = walkingSound;
+        audioSource.loop = true; // Enable looping for walking sound
+        audioSource.playOnAwake = false; // Don't play immediately
     }
 
     private void Update()
@@ -59,11 +70,13 @@ public class PlayerMovement : MonoBehaviour
         SpeedControl();
         StateHandler();
 
-        //control drag
+        // Control drag
         if (grounded)
             rb.drag = groundDrag;
         else
             rb.drag = 0;
+
+        HandleWalkingSound();
     }
 
     private void FixedUpdate()
@@ -76,14 +89,14 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        // start crouching
+        // Start crouching
         if (Input.GetKeyDown(crouchKey))
         {
             transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
             rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
         }
 
-        // stop crouching
+        // Stop crouching
         if (Input.GetKeyUp(crouchKey))
         {
             transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
@@ -92,21 +105,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void StateHandler()
     {
-        // mode - crouching
+        // Mode - crouching
         if (Input.GetKeyDown(crouchKey))
         {
             state = MovementState.crouching;
             moveSpeed = crouchSpeed;
         }
 
-        // mode - sprinting
+        // Mode - sprinting
         if (grounded && Input.GetKey(sprintKey))
         {
             state = MovementState.sprinting;
             moveSpeed = sprintSpeed;
         }
 
-        // mode - walking
+        // Mode - walking
         else if (grounded)
         {
             state = MovementState.walking;
@@ -125,11 +138,32 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
-        // limit velocity if needed
+        // Limit velocity if needed
         if (flatVel.magnitude > moveSpeed)
         {
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+        }
+    }
+
+    private void HandleWalkingSound()
+    {
+        // Play sound only in walking state and when moving
+        if (state == MovementState.walking && (horizontalInput != 0 || verticalInput != 0))
+        {
+            if (!isPlayingWalkingSound)
+            {
+                audioSource.Play();
+                isPlayingWalkingSound = true;
+            }
+        }
+        else
+        {
+            if (isPlayingWalkingSound)
+            {
+                audioSource.Stop();
+                isPlayingWalkingSound = false;
+            }
         }
     }
 }
