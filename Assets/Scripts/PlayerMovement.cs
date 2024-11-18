@@ -48,6 +48,10 @@ public class PlayerMovement : MonoBehaviour
     private AudioSource audioSource;
     private bool isPlayingWalkingSound = false;
 
+    public AudioClip sprintingSound; // Sprinting sound effect
+    private AudioSource sprintAudio;
+    private bool isPlayingSprintingSound = false;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -60,6 +64,11 @@ public class PlayerMovement : MonoBehaviour
         audioSource.clip = walkingSound;
         audioSource.loop = true; // Enable looping for walking sound
         audioSource.playOnAwake = false; // Don't play immediately
+
+        sprintAudio = gameObject.AddComponent<AudioSource>();
+        sprintAudio.clip = sprintingSound;
+        sprintAudio.loop = true; // Enable looping for sprinting sound
+        sprintAudio.playOnAwake = false; // Don't play immediately
     }
 
     private void Update()
@@ -77,6 +86,7 @@ public class PlayerMovement : MonoBehaviour
             rb.drag = 0;
 
         HandleWalkingSound();
+        HandleSprintingSound();
     }
 
     private void FixedUpdate()
@@ -163,6 +173,27 @@ public class PlayerMovement : MonoBehaviour
             {
                 audioSource.Stop();
                 isPlayingWalkingSound = false;
+            }
+        }
+    }
+
+    private void HandleSprintingSound()
+    {
+        // Play sound only in walking state and when moving
+        if (state == MovementState.sprinting && (horizontalInput != 0 || verticalInput != 0))
+        {
+            if (!isPlayingSprintingSound)
+            {
+                sprintAudio.Play();
+                isPlayingSprintingSound = true;
+            }
+        }
+        else
+        {
+            if (isPlayingSprintingSound)
+            {
+                sprintAudio.Stop();
+                isPlayingSprintingSound = false;
             }
         }
     }

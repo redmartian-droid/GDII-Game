@@ -8,7 +8,7 @@ public class Firearm : MonoBehaviour
     public ParticleSystem GunFlash;
     public AudioSource gunSound;  // Reference to the AudioSource component
 
-    private int currentAmmo = 10;  // Ammo count
+    private int currentAmmo = 100;  // Ammo count
     private float nextTimeToFire = 0f;  // Controls fire rate
     public float fireRate = 15f;  // Rate of fire
     internal int ammoCache;  // Ammo cache for reloading
