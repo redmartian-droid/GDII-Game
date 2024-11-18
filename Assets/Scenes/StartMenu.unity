@@ -3629,8 +3629,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "E = Interact with NPC\nSpace Bar = Shoot \nEsc = Pause Menu\nLeft Shift
-    = Sprint \nLeft Control = Crouch \n"
+  m_text: "E = Interact with NPC and Objects\nSpace Bar = Shoot \nEsc = Pause Menu\nLeft
+    Shift = Sprint \nLeft Control = Crouch \n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 73dd65ea4e4f3f0488ff135cd794263b, type: 2}
   m_sharedMaterial: {fileID: -5348889690437809283, guid: 73dd65ea4e4f3f0488ff135cd794263b, type: 2}
