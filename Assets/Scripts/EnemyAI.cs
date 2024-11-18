@@ -17,12 +17,14 @@ public class EnemyAI : MonoBehaviour
     public float knockbackDuration = 0.5f;
     public TMP_Text livesText; // Reference to the UI Text
     public int maxLives = 5; // Maximum number of lives
+    public AudioClip hitSound; // The sound to play when the player is hit
 
     private Transform player;
     private int lives; // Current number of lives
     private int contactCount = 0;
     private bool canIncrement = true;
     private float lastContactTime;
+    private AudioSource audioSource; // Reference to the AudioSource component
 
     void Start()
     {
@@ -35,6 +37,10 @@ public class EnemyAI : MonoBehaviour
         {
             obj.SetActive(false);
         }
+
+        // Initialize the AudioSource component
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false; // Ensure the sound doesn't play on start
     }
 
     void Update()
@@ -92,6 +98,12 @@ public class EnemyAI : MonoBehaviour
                 StartCoroutine(KnockbackPlayer());
 
                 LoseLife(); // Deduct a life when the player is hit
+
+                // Play the hit sound effect
+                if (hitSound != null)
+                {
+                    audioSource.PlayOneShot(hitSound);
+                }
             }
         }
     }
