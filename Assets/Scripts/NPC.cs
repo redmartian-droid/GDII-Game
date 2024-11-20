@@ -19,9 +19,12 @@ public class NPC : MonoBehaviour
     {
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
         {
+            Debug.Log("Talking");
+
             if (!isInteracting)
             {
                 StartDialogue();
+                Debug.Log("Dialogue Shows");
             }
             else
             {
